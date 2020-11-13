@@ -14,6 +14,7 @@ const Form = () => {
 
 
     const onSubmit = data => {
+        // if(!data.title) return;
         const unixTime = Math.floor(Date.now() / 1000);
 
         const type  = state.mode.type === 'add' ? 'ITEMS_ADD' : 'ITEMS_EDIT'
@@ -23,7 +24,7 @@ const Form = () => {
             type,
             payload : {
                 id,
-                title : data.item
+                title : data.title
             }
         })
 
@@ -35,33 +36,23 @@ const Form = () => {
         }
 
         reset({
-            item: ''
+            title: ''
         });
 
     }
-
-    const onChange = args => ({
-        value: args[0].nativeEvent.text,
-      });
-
-
-    const onClose = e => {
-        return;
-    };
-
-    console.log('inputValue', inputValue );
 
     return (<div>
                 <form onSubmit={handleSubmit(onSubmit)} >
                     <RHFInput
                         register={register}
                         setValue={setValue}
-                        as={<input />}
-                        name="item"
+                        as={<input  />}
+                        name="title"
                         value={inputValue}
+                        rules={{ required: 'Please select an option'}}
                     />
                     <button type="submit" type="primary" size={"large"} style={{ width: "100%" }}>{buttonLabel}</button>
-                    {errors.item && <p>Questo campo è obbligatorio</p> }
+                    {errors.title && <p>Questo campo è obbligatorio</p> }
                 </form>
             </div>);
 }
